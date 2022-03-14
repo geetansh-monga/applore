@@ -22,7 +22,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
   _scrollListener0() {
     double maxScroll = scrollController0.position.maxScrollExtent;
     double currentScroll = scrollController0.offset;
-    double delta = MediaQuery.of(context).size.height * 0.10;
+    double delta = MediaQuery.of(context).size.height * 0.05;
     if (maxScroll - currentScroll < delta) {
       products.fetchNextProducts();
     }
@@ -53,15 +53,15 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 ? const Center(
                     child:
                         Text("Sorry there are no products added please add."))
-                : ListView.builder(
-                    reverse: true,
-                    cacheExtent: 500,
+                : SingleChildScrollView(
                     controller: scrollController0,
-                    padding: const EdgeInsets.all(0),
-                    shrinkWrap: true,
-                    itemCount: snapshot.data!.length + 1,
-                    itemBuilder: (context, index) {
-                      if (index < snapshot.data!.length) {
+                    child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      cacheExtent: 500,
+                      padding: const EdgeInsets.all(0),
+                      shrinkWrap: true,
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
                         ProductModel _product =
                             ProductModel.fromMap(snapshot.data![index]);
                         return ListTile(
@@ -80,10 +80,22 @@ class _ProductsScreenState extends State<ProductsScreen> {
                             ],
                           ),
                         );
-                      } else {
-                        return Container();
-                      }
-                    },
+
+                        // else {
+                        //   if (snapshot.connectionState ==
+                        //       ConnectionState.waiting) {}
+                        //   return Container();
+                        // return Container(
+                        //   alignment: Alignment.center,
+                        //   padding: const EdgeInsets.only(bottom: 50, top: 20),
+                        //   child: const Text(
+                        //     'end of list',
+                        //     style: TextStyle(
+                        //         fontSize: 30, fontWeight: FontWeight.bold),
+                        //   ),
+                        // );
+                      },
+                    ),
                   ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -96,11 +108,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
           bool? _isNewProductAdded = await Navigator.push(context,
               MaterialPageRoute(builder: (_) => const AddProductScreen()));
           if (_isNewProductAdded != null) {
-            products.fetchFirstList();
+            await products.fetchFirstList();
 
             // scrolling animation to make it on top.
-            scrollController0.animateTo(scrollController0.initialScrollOffset,
-                duration: const Duration(milliseconds: 1),
+            scrollController0.animateTo(0.1,
+                duration: const Duration(milliseconds: 500),
                 curve: Curves.easeIn);
           }
         },

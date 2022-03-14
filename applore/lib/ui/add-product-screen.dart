@@ -1,6 +1,7 @@
 import 'package:applore/firebase/cloud_firestore.dart';
 import 'package:applore/model/product-model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AddProductScreen extends StatefulWidget {
   const AddProductScreen({Key? key}) : super(key: key);
@@ -22,18 +23,17 @@ class _AddProductScreenState extends State<AddProductScreen> {
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(),
-          Center(
+          Container(
+            alignment: Alignment.center,
             child: SizedBox(
-              height: MediaQuery.of(context).size.height / 2,
               width: MediaQuery.of(context).size.width / 1.2,
               child: Form(
                   key: _formKey,
                   child: Column(
                     children: [
                       TextFormField(
+                        autofocus: true,
                         decoration:
                             const InputDecoration(hintText: "Product Name"),
                         validator: (value) {
@@ -62,6 +62,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         height: 10,
                       ),
                       TextFormField(
+                        keyboardType: TextInputType.number,
                         decoration: const InputDecoration(hintText: "Price"),
                         validator: (value) {
                           if (value == null || value == "") {
@@ -81,17 +82,16 @@ class _AddProductScreenState extends State<AddProductScreen> {
                               _productModel.createdAt = DateTime.now();
                               await cloudFirestore
                                   .addProduct(_productModel)
-                                  .whenComplete(() {
-                                print("product added");
-                                Navigator.pop(context, true);
-                              }).onError((error, stackTrace) => print(error));
+                                  .onError((error, stackTrace) => print(error));
+                              print("product added");
+                              Navigator.pop(context, true);
                             }
                           },
                           child: const Text("Add Product"))
                     ],
                   )),
             ),
-          )
+          ),
         ],
       ),
     );

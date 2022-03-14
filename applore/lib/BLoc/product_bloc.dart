@@ -33,19 +33,12 @@ class ProductListBloc {
     documentList = [];
     noMore = false;
     _lastDoc = null;
-    isLoading = true;
     QuerySnapshot _querySnapshot = await query!.limit(limit!).get();
     if (_querySnapshot.size != 0) {
       _lastDoc = _querySnapshot.docs[_querySnapshot.size - 1];
       documentList?.addAll(_querySnapshot.docs);
       productController?.sink.add(documentList!);
-      // if (_querySnapshot.size < 10) {
-      // productController?.sink.();
-      // }
-    } else {
-      productController?.sink.add(documentList!);
     }
-    isLoading = false;
   }
 
 /*This will automatically fetch the next 10 elements from the list*/
@@ -56,6 +49,8 @@ class ProductListBloc {
           await query!.startAfterDocument(_lastDoc!).limit(limit!).get();
       if (_querySnapshot.size == 0) {
         noMore = true;
+      } else {
+        noMore = false;
       }
       print(noMore);
       if (!noMore!) {
@@ -63,7 +58,7 @@ class ProductListBloc {
         _lastDoc = _querySnapshot.docs[_querySnapshot.size - 1];
         print(_lastDoc);
         print(_querySnapshot.docs.length);
-        documentList!.addAll(_querySnapshot.docs);
+        documentList!.addAll(_querySnapshot.docs.reversed);
         print(documentList!.length);
         productController!.sink.add(documentList!);
       }
