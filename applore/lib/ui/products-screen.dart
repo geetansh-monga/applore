@@ -21,9 +21,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
         automaticallyImplyLeading: false,
         actions: const [LogoutButton()],
       ),
-      body: FutureBuilder<QuerySnapshot>(builder: (context, snapshot) {
-        return ListView.builder(itemBuilder: ((context, index) {}));
-      }),
+      body: Container(),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
