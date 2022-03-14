@@ -1,5 +1,6 @@
 import 'package:applore/firebase/cloud_firestore.dart';
 import 'package:applore/model/product-model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -79,7 +80,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       ElevatedButton(
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              _productModel.createdAt = DateTime.now();
+                              _productModel.createdAt = Timestamp.now();
                               await cloudFirestore
                                   .addProduct(_productModel)
                                   .onError((error, stackTrace) => print(error));

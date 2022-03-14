@@ -5,7 +5,7 @@ class ProductModel {
   String? description;
   String? productImageUrl;
   int? productPrice;
-  var createdAt;
+  var createdAt; //Date and Time
 
   ProductModel({this.productName, this.description, this.productPrice});
 

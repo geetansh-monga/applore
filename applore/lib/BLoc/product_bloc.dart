@@ -11,8 +11,10 @@ class ProductListBloc {
   bool? noMore;
   List<DocumentSnapshot>? documentList = <DocumentSnapshot>[];
 
+//Initialized Controller.
   BehaviorSubject<List<DocumentSnapshot>>? productController;
 
+//Constructor for List Bloc.
   ProductListBloc() {
     query = FirebaseFirestore.instance
         .collection("users")
@@ -26,6 +28,7 @@ class ProductListBloc {
     fetchFirstList();
   }
 
+//Product Stream Bloc defined.
   Stream<List<DocumentSnapshot>> get productsStream =>
       productController!.stream;
 
@@ -37,6 +40,8 @@ class ProductListBloc {
     if (_querySnapshot.size != 0) {
       _lastDoc = _querySnapshot.docs[_querySnapshot.size - 1];
       documentList?.addAll(_querySnapshot.docs);
+      productController?.sink.add(documentList!);
+    } else {
       productController?.sink.add(documentList!);
     }
   }

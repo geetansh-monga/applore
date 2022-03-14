@@ -1,6 +1,7 @@
 import 'package:applore/BLoc/product_bloc.dart';
 import 'package:applore/model/product-model.dart';
 import 'package:applore/ui/add-product-screen.dart';
+import 'package:applore/ui/widgets/product-tile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:applore/ui/widgets/logout_button.dart';
@@ -19,6 +20,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   late ScrollController scrollController0;
 
+// scroll listner defined.
   _scrollListener0() {
     double maxScroll = scrollController0.position.maxScrollExtent;
     double currentScroll = scrollController0.offset;
@@ -56,44 +58,16 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 : SingleChildScrollView(
                     controller: scrollController0,
                     child: ListView.builder(
+                      reverse: true,
                       physics: const NeverScrollableScrollPhysics(),
                       cacheExtent: 500,
                       padding: const EdgeInsets.all(0),
                       shrinkWrap: true,
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
-                        ProductModel _product =
-                            ProductModel.fromMap(snapshot.data![index]);
-                        return ListTile(
-                          leading: const FlutterLogo(
-                            size: 100,
-                          ),
-                          title: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                  "Product Name: ${_product.productName.toString()}"),
-                              Text(
-                                  "Product Description: ${_product.description.toString()}"),
-                              Text(
-                                  "Product Price: ${_product.productPrice.toString()}"),
-                            ],
-                          ),
-                        );
-
-                        // else {
-                        //   if (snapshot.connectionState ==
-                        //       ConnectionState.waiting) {}
-                        //   return Container();
-                        // return Container(
-                        //   alignment: Alignment.center,
-                        //   padding: const EdgeInsets.only(bottom: 50, top: 20),
-                        //   child: const Text(
-                        //     'end of list',
-                        //     style: TextStyle(
-                        //         fontSize: 30, fontWeight: FontWeight.bold),
-                        //   ),
-                        // );
+                        return ProductTile(
+                            product:
+                                ProductModel.fromMap(snapshot.data![index]));
                       },
                     ),
                   ),
