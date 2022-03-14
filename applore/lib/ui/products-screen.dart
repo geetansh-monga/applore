@@ -109,11 +109,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
           bool? _isNewProductAdded = await Navigator.push(context,
               MaterialPageRoute(builder: (_) => const AddProductScreen()));
           if (_isNewProductAdded != null) {
-            await products.fetchFirstList();
+            products.fetchFirstList();
 
             // scrolling animation to make it on top.
             scrollController0.animateTo(scrollController0.initialScrollOffset,
-                duration: const Duration(milliseconds: 500),
+                duration: const Duration(milliseconds: 1),
                 curve: Curves.easeIn);
           }
         },
