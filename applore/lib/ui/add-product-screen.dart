@@ -80,8 +80,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             if (_formKey.currentState!.validate()) {
                               await cloudFirestore
                                   .addProduct(_productModel)
-                                  .whenComplete(() => print("product added"))
-                                  .onError((error, stackTrace) => print(error));
+                                  .whenComplete(() {
+                                print("product added");
+                                Navigator.pop(context, true);
+                              }).onError((error, stackTrace) => print(error));
                             }
                           },
                           child: const Text("Add Product"))

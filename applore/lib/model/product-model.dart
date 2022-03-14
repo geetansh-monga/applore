@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class ProductModel {
   String? productName;
   String? description;
@@ -15,7 +17,7 @@ class ProductModel {
     return data;
   }
 
-  ProductModel.fromMap(Map<String, dynamic> mapData) {
+  ProductModel.fromMap(DocumentSnapshot mapData) {
     this.productName = mapData["productName"];
     this.description = mapData["description"];
     this.productImageUrl = mapData["productImageUrl"];

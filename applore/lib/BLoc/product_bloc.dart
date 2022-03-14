@@ -25,14 +25,21 @@ class ProductListBloc {
     fetchFirstList();
   }
 
-  Stream<List<DocumentSnapshot>> get followsStream => productController!.stream;
+  Stream<List<DocumentSnapshot>> get productsStream =>
+      productController!.stream;
 
   Future fetchFirstList() async {
+    documentList = [];
     QuerySnapshot _querySnapshot = await query!.limit(limit!).get();
-
-    _lastDoc = _querySnapshot.docs[_querySnapshot.size - 1];
-    documentList?.addAll(_querySnapshot.docs);
     productController?.sink.add(documentList!);
+    if (_querySnapshot.size != 0) {
+      _lastDoc = _querySnapshot.docs[_querySnapshot.size - 1];
+      documentList?.addAll(_querySnapshot.docs);
+      productController?.sink.add(documentList!);
+      // if (_querySnapshot.size < 10) {
+      // productController?.sink.();
+      // }
+    }
   }
 
 /*This will automatically fetch the next 10 elements from the list*/
@@ -43,7 +50,7 @@ class ProductListBloc {
           await query!.startAfterDocument(_lastDoc!).limit(limit!).get();
       if (_querySnapshot.size == 0) {
         noMore = true;
-        productController!.sink.close();
+        // productController!.sink.close();
       }
       print(noMore);
       if (!noMore!) {
@@ -53,7 +60,6 @@ class ProductListBloc {
         print(_querySnapshot.docs.length);
         documentList!.addAll(_querySnapshot.docs);
         print(documentList!.length);
-        // await Future.delayed(Duration(seconds: 1));
         productController!.sink.add(documentList!);
       }
       isLoading = false;
