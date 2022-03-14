@@ -78,6 +78,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       ElevatedButton(
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
+                              _productModel.createdAt = DateTime.now();
                               await cloudFirestore
                                   .addProduct(_productModel)
                                   .whenComplete(() {

@@ -17,7 +17,8 @@ class ProductListBloc {
     query = FirebaseFirestore.instance
         .collection("users")
         .doc(FirebaseAuth.instance.currentUser!.email)
-        .collection("products");
+        .collection("products")
+        .orderBy("createdAt");
     limit = 10;
     isLoading = false;
     noMore = false;

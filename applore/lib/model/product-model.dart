@@ -5,6 +5,7 @@ class ProductModel {
   String? description;
   String? productImageUrl;
   int? productPrice;
+  var createdAt;
 
   ProductModel({this.productName, this.description, this.productPrice});
 
@@ -14,10 +15,12 @@ class ProductModel {
     data["description"] = product.description;
     data["productImageUrl"] = product.productImageUrl;
     data["productPrice"] = product.productPrice;
+    data["createdAt"] = product.createdAt;
     return data;
   }
 
   ProductModel.fromMap(DocumentSnapshot mapData) {
+    this.createdAt = mapData["createdAt"];
     this.productName = mapData["productName"];
     this.description = mapData["description"];
     this.productImageUrl = mapData["productImageUrl"];

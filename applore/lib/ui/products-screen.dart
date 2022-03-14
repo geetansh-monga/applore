@@ -54,6 +54,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     child:
                         Text("Sorry there are no products added please add."))
                 : ListView.builder(
+                    reverse: true,
                     cacheExtent: 500,
                     controller: scrollController0,
                     padding: const EdgeInsets.all(0),
@@ -64,8 +65,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
                         ProductModel _product =
                             ProductModel.fromMap(snapshot.data![index]);
                         return ListTile(
-                          leading: Text(
-                              "Product Image URl: ${_product.productImageUrl.toString()}"),
+                          leading: const FlutterLogo(
+                            size: 100,
+                          ),
                           title: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -79,22 +81,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           ),
                         );
                       } else {
-                        return Container(
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.only(bottom: 50, top: 20),
-                          child: snapshot.connectionState ==
-                                  ConnectionState.waiting
-                              ? const Padding(
-                                  padding: EdgeInsets.only(bottom: 12),
-                                  child: CircularProgressIndicator(),
-                                )
-                              : const Text(
-                                  'end of list',
-                                  style: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                        );
+                        return Container();
                       }
                     },
                   ),
