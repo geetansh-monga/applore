@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:applore/firebase/sign_in_using_email.dart';
-import 'package:applore/ui/products-screen.dart';
+import 'package:applore/ui/screens/products-screen.dart';
 import 'package:applore/ui/widgets/login_textField.dart';
 
 class LoginScreen extends StatefulWidget {

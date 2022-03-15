@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:applore/ui/login-screen.dart';
+import 'package:applore/ui/screens/login-screen.dart';
 
 class LogoutButton extends StatelessWidget {
   const LogoutButton({

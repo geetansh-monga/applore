@@ -1,6 +1,6 @@
 import 'package:applore/BLoc/product_bloc.dart';
 import 'package:applore/model/product-model.dart';
-import 'package:applore/ui/add-product-screen.dart';
+import 'package:applore/ui/screens/add-product-screen.dart';
 import 'package:applore/ui/widgets/product-tile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
