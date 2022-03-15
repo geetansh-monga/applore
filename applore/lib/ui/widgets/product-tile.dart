@@ -41,7 +41,7 @@ class ProductTile extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            Text("Price: ${_product.productPrice.toString()}"),
+            Text("Price: ₹ ${_product.productPrice.toString()}/-"),
           ],
         ),
       ),
