@@ -88,6 +88,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                   .addProduct(_productModel)
                                   .onError((error, stackTrace) => print(error));
                               print("product added");
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  content: Text(
+                                      "${_productModel.productName} added to Firestore")));
                               Navigator.pop(context, true);
                             }
                           },
