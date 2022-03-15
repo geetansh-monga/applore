@@ -26,6 +26,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
+            padding: EdgeInsets.symmetric(
+              vertical: 20,
+            ),
             alignment: Alignment.center,
             child: SizedBox(
               width: MediaQuery.of(context).size.width / 1.2,
@@ -88,7 +91,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
                               Navigator.pop(context, true);
                             }
                           },
-                          child: const Text("Add Product"))
+                          child: const Text(
+                            "Add Product",
+                            style: TextStyle(color: Colors.white),
+                          ))
                     ],
                   )),
             ),

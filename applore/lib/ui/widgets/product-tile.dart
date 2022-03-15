@@ -10,10 +10,23 @@ class ProductTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(20),
+      decoration: BoxDecoration(boxShadow: [
+        BoxShadow(
+          color: Color.fromARGB(255, 22, 164, 230),
+          blurRadius: 0.5,
+          spreadRadius: 0.5,
+          offset: Offset.fromDirection(1, 5),
+        ),
+        BoxShadow(
+          color: Color.fromARGB(255, 145, 206, 235),
+          blurRadius: 0.5,
+          spreadRadius: 0.5,
+          offset: Offset.fromDirection(1, 5),
+        )
+      ], color: Colors.white, borderRadius: BorderRadius.circular(20)),
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(vertical: 23),
         horizontalTitleGap: 10,
-        tileColor: Colors.grey.shade200,
         leading: const FlutterLogo(
           size: 100,
         ),
