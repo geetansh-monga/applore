@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:applore/firebase/cloud_firestore.dart';
 import 'package:applore/model/product-model.dart';
 import 'package:applore/ui/widgets/add_product_image.dart';
@@ -7,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 class AddProductScreen extends StatefulWidget {
   const AddProductScreen({Key? key}) : super(key: key);
@@ -42,7 +41,19 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     children: [
                       AddproductImage(
                         onProductImageAdded: (imageFile) async {
-                          _imageFile = imageFile;
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  "Orignal Image size: ${(imageFile!.readAsBytesSync().lengthInBytes / (1024 * 1024)).toStringAsFixed(2)} MB")));
+                          File? _compressedImageFile =
+                              await FlutterImageCompress.compressAndGetFile(
+                            imageFile.absolute.path,
+                            imageFile.path,
+                            quality: 75,
+                          );
+                          _imageFile = _compressedImageFile;
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  "Compressed Image size: ${(_compressedImageFile!.readAsBytesSync().lengthInBytes / (1024 * 1024)).toStringAsFixed(2)} MB")));
                         },
                       ),
                       const SizedBox(

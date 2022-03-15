@@ -12,13 +12,13 @@ class ProductTile extends StatelessWidget {
       margin: const EdgeInsets.all(20),
       decoration: BoxDecoration(boxShadow: [
         BoxShadow(
-          color: Color.fromARGB(255, 22, 164, 230),
+          color: const Color.fromARGB(255, 22, 164, 230),
           blurRadius: 0.5,
           spreadRadius: 0.5,
           offset: Offset.fromDirection(1, 5),
         ),
         BoxShadow(
-          color: Color.fromARGB(255, 145, 206, 235),
+          color: const Color.fromARGB(255, 145, 206, 235),
           blurRadius: 0.5,
           spreadRadius: 0.5,
           offset: Offset.fromDirection(1, 5),
@@ -31,7 +31,10 @@ class ProductTile extends StatelessWidget {
             ? const FlutterLogo(
                 size: 100,
               )
-            : Image.network(_product.productImageUrl!),
+            : SizedBox(
+                height: 80,
+                width: 80,
+                child: Image.network(_product.productImageUrl!)),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
