@@ -58,7 +58,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 : SingleChildScrollView(
                     controller: scrollController0,
                     child: ListView.builder(
-                      reverse: true,
                       physics: const NeverScrollableScrollPhysics(),
                       cacheExtent: 500,
                       padding: const EdgeInsets.all(0),
@@ -73,7 +72,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
                   ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
         onPressed: () async {
           // ignore: avoid_print
           print("add product");
@@ -85,7 +87,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
             await products.fetchFirstList();
 
             // scrolling animation to make it on top.
-            scrollController0.animateTo(0.1,
+            scrollController0.animateTo(1,
                 duration: const Duration(milliseconds: 500),
                 curve: Curves.easeIn);
           }

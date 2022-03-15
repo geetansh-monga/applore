@@ -27,9 +27,11 @@ class ProductTile extends StatelessWidget {
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(vertical: 23),
         horizontalTitleGap: 10,
-        leading: const FlutterLogo(
-          size: 100,
-        ),
+        leading: _product.productImageUrl == null
+            ? const FlutterLogo(
+                size: 100,
+              )
+            : Image.network(_product.productImageUrl!),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

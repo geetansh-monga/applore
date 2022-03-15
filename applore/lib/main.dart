@@ -17,8 +17,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Applore Task',
       theme: ThemeData(
-        primarySwatch: Colors.cyan,
-      ),
+          primarySwatch: Colors.cyan,
+          appBarTheme: const AppBarTheme(
+            iconTheme: IconThemeData(color: Colors.white),
+            titleTextStyle: TextStyle(
+                color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),
+          )),
 // Screen A is setted home for the application.
       home: const LoginScreen(),
     );

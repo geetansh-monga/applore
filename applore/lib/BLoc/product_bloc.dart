@@ -63,7 +63,7 @@ class ProductListBloc {
         _lastDoc = _querySnapshot.docs[_querySnapshot.size - 1];
         print(_lastDoc);
         print(_querySnapshot.docs.length);
-        documentList!.addAll(_querySnapshot.docs.reversed);
+        documentList!.addAll(_querySnapshot.docs);
         print(documentList!.length);
         productController!.sink.add(documentList!);
       }

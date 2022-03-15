@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:applore/firebase/cloud_firestore.dart';
 import 'package:applore/model/product-model.dart';
+import 'package:applore/ui/widgets/add_product_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddProductScreen extends StatefulWidget {
   const AddProductScreen({Key? key}) : super(key: key);
@@ -13,7 +18,7 @@ class AddProductScreen extends StatefulWidget {
 
 class _AddProductScreenState extends State<AddProductScreen> {
   final ProductModel _productModel = ProductModel();
-
+  File? _imageFile;
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -22,11 +27,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
       appBar: AppBar(
         title: const Text("Add Product"),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            padding: EdgeInsets.symmetric(
+      body: Center(
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.symmetric(
               vertical: 20,
             ),
             alignment: Alignment.center,
@@ -36,6 +40,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   key: _formKey,
                   child: Column(
                     children: [
+                      AddproductImage(
+                        onProductImageAdded: (imageFile) async {
+                          _imageFile = imageFile;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 60,
+                      ),
                       TextFormField(
                         autofocus: true,
                         decoration:
@@ -83,15 +95,33 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       ElevatedButton(
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              _productModel.createdAt = Timestamp.now();
-                              await cloudFirestore
-                                  .addProduct(_productModel)
-                                  .onError((error, stackTrace) => print(error));
-                              print("product added");
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                  content: Text(
-                                      "${_productModel.productName} added to Firestore")));
-                              Navigator.pop(context, true);
+                              if (_imageFile != null) {
+                                _productModel.createdAt = Timestamp.now();
+                                UploadTask _uploadTask = FirebaseStorage
+                                    .instance
+                                    .ref(
+                                        "${FirebaseAuth.instance.currentUser!.email}/products/${DateTime.now()}}")
+                                    .putFile(_imageFile!);
+                                final snapshot =
+                                    await _uploadTask.whenComplete(() => null);
+                                final String url =
+                                    await snapshot.ref.getDownloadURL();
+                                print("image url:" + url.toString());
+                                _productModel.productImageUrl = url.toString();
+                                await cloudFirestore
+                                    .addProduct(_productModel)
+                                    .onError(
+                                        (error, stackTrace) => print(error));
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                    content: Text(
+                                        "${_productModel.productName} added to Firestore")));
+                                Navigator.pop(context, true);
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content:
+                                            Text("Product Image not added")));
+                              }
                             }
                           },
                           child: const Text(
@@ -102,7 +132,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   )),
             ),
           ),
-        ],
+        ),
       ),
     );
   }
