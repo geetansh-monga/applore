@@ -2,8 +2,16 @@
 
 A task from applore.
 
-## Features Completed till now.
+## Pointers
 
-- Login/Register.
-- Addition of product to firebase without image upload for the time being.
-- required form field validation for add product.
+- Architecture used BloC for fetching product list with pagination of limit 10.
+- Backend used: Firebase.
+- Properties of products: 
+  - Name
+  - Description
+  - Price
+  - Product Image
+
+ ## Branches
+ - Master
+ - With Product Image
