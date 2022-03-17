@@ -2,6 +2,9 @@
 
 A task from applore.
 
+## Working and tested platform
+  - IOS is working and tested.
+
 ## Pointers
 
 - Architecture used BloC for fetching product list with pagination of limit 10.
